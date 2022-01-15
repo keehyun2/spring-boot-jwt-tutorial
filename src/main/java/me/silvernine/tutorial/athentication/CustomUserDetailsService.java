@@ -1,4 +1,4 @@
-package me.silvernine.tutorial.service;
+package me.silvernine.tutorial.athentication;
 
 import me.silvernine.tutorial.entity.User;
 import me.silvernine.tutorial.repository.UserRepository;
