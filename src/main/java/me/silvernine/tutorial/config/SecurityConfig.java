@@ -14,9 +14,15 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.*;
 import org.springframework.web.filter.CorsFilter;
 
-@EnableWebSecurity
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+@EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -42,12 +48,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+
+        NegatedRequestMatcher negatedRequestMatcher = new NegatedRequestMatcher(new OrRequestMatcher(
+                Stream.of("/api/hello", "/api/authenticate", "/api/signup")
+                        .map(AntPathRequestMatcher::new)
+                        .toArray(AntPathRequestMatcher[]::new)
+        ));
+
         httpSecurity
                 // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
                 .csrf().disable()
                 .cors().and()
 
-                .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAt(new JwtFilter(negatedRequestMatcher, tokenProvider), UsernamePasswordAuthenticationFilter.class)
 
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
@@ -66,11 +79,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/hello").permitAll()
-                .antMatchers("/api/authenticate").permitAll()
-                .antMatchers("/api/signup").permitAll()
+                .requestMatchers(negatedRequestMatcher)
+                .authenticated();
 
-                .anyRequest().authenticated();
+//                .antMatchers("/api/hello").permitAll()
+//                .antMatchers("/api/authenticate").permitAll()
+//                .antMatchers("/api/signup").permitAll()
+
+//                .anyRequest().authenticated();
     }
 
     @Override

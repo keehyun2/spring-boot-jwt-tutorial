@@ -1,5 +1,6 @@
 package me.silvernine.tutorial.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import me.silvernine.tutorial.athentication.CustomAuthenticationToken;
 import me.silvernine.tutorial.dto.LoginDto;
 import me.silvernine.tutorial.dto.TokenDto;
@@ -21,6 +22,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
+@Slf4j
 public class AuthController {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -39,6 +41,7 @@ public class AuthController {
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        log.debug("authentication complete");
 
         String jwt = tokenProvider.createToken(authentication);
 

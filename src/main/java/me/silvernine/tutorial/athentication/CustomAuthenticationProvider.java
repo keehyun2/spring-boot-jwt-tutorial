@@ -23,11 +23,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String fToken = (String) authentication.getCredentials();
         FirebaseToken firebaseToken = null;
+        log.debug("CustomAuthenticationProvider");
 
         try {
             firebaseToken = FirebaseAuth.getInstance().verifyIdToken(fToken);
         } catch (FirebaseAuthException e) {
-            log.error(fToken);
+            log.error("Firebase 토큰 유효성 체크 실패");
             throw new BadCredentialsException("Firebase 토큰 유효성 체크 실패. username=" + username, e);
         }
 

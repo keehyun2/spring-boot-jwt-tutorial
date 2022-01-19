@@ -2,6 +2,8 @@ package me.silvernine.tutorial.service;
 
 import java.util.Collections;
 import java.util.Optional;
+
+import lombok.extern.slf4j.Slf4j;
 import me.silvernine.tutorial.dto.UserDto;
 import me.silvernine.tutorial.entity.Authority;
 import me.silvernine.tutorial.entity.User;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Slf4j
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -50,6 +53,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public UserDto getMyUserWithAuthorities() {
+        log.debug("getMyUserWithAuthorities");
         return UserDto.from(SecurityUtil.getCurrentUsername().flatMap(userRepository::findOneWithAuthoritiesByUsername).orElse(null));
     }
 }

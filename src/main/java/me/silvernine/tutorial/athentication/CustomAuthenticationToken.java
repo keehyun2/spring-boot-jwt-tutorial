@@ -7,16 +7,16 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class CustomAuthenticationToken extends AbstractAuthenticationToken {
-    private String principal;
+    private Object principal;
     private String credentials;
 
-    public CustomAuthenticationToken(String principal, String credentials) {
+    public CustomAuthenticationToken(Object principal, String credentials) {
         super(Collections.emptyList());
         this.principal = principal;
         this.credentials = credentials;
     }
 
-    public CustomAuthenticationToken(String principal, String credentials, Collection<? extends GrantedAuthority> authorities) {
+    public CustomAuthenticationToken(Object principal, String credentials, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.principal = principal;
         this.credentials = credentials;
