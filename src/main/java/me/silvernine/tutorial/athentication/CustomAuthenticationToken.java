@@ -7,18 +7,18 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class CustomAuthenticationToken extends AbstractAuthenticationToken {
-    private String email;
+    private String principal;
     private String credentials;
 
-    public CustomAuthenticationToken(String email, String credentials) {
+    public CustomAuthenticationToken(String principal, String credentials) {
         super(Collections.emptyList());
-        this.email = email;
+        this.principal = principal;
         this.credentials = credentials;
     }
 
-    public CustomAuthenticationToken(String email, String credentials, Collection<? extends GrantedAuthority> authorities) {
+    public CustomAuthenticationToken(String principal, String credentials, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
-        this.email = email;
+        this.principal = principal;
         this.credentials = credentials;
     }
 
@@ -29,6 +29,6 @@ public class CustomAuthenticationToken extends AbstractAuthenticationToken {
 
     @Override
     public Object getPrincipal() {
-        return this.email;
+        return this.principal;
     }
 }
