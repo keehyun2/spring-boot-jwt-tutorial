@@ -1,15 +1,12 @@
 package me.silvernine.tutorial.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import me.silvernine.tutorial.athentication.CustomAuthenticationToken;
+import me.silvernine.tutorial.athentication.FirebaseAuthenticationToken;
 import me.silvernine.tutorial.dto.LoginDto;
 import me.silvernine.tutorial.dto.TokenDto;
-import me.silvernine.tutorial.jwt.JwtFilter;
 import me.silvernine.tutorial.jwt.TokenProvider;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,7 +34,7 @@ public class AuthController {
 
 //        UsernamePasswordAuthenticationToken authenticationToken =
 //                new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
-        CustomAuthenticationToken authenticationToken = new CustomAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
+        FirebaseAuthenticationToken authenticationToken = new FirebaseAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);

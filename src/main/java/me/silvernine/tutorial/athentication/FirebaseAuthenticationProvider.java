@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class CustomAuthenticationProvider implements AuthenticationProvider {
+public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     private final CustomUserDetailsService userDetailsService;
 
     @Override
@@ -23,7 +23,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String fToken = (String) authentication.getCredentials();
         FirebaseToken firebaseToken = null;
-        log.debug("CustomAuthenticationProvider");
+        log.info("CustomAuthenticationProvider");
 
         try {
             firebaseToken = FirebaseAuth.getInstance().verifyIdToken(fToken);
@@ -37,11 +37,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("username is not found. username=" + username);
         }
 
-        return new CustomAuthenticationToken(firebaseToken.getEmail(), fToken, user.getAuthorities());
+        return new FirebaseAuthenticationToken(username, fToken, user.getAuthorities());
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return CustomAuthenticationToken.class.isAssignableFrom(authentication);
+        return FirebaseAuthenticationToken.class.isAssignableFrom(authentication);
     }
 }

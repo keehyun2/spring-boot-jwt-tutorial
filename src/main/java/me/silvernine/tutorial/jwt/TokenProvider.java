@@ -11,7 +11,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -32,10 +31,7 @@ public class TokenProvider implements InitializingBean {
 
    private Key key;
 
-
-   public TokenProvider(
-      @Value("${jwt.secret}") String secret,
-      @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds) {
+   public TokenProvider(@Value("${jwt.secret}") String secret, @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds) {
       this.secret = secret;
       this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
    }
@@ -75,9 +71,7 @@ public class TokenProvider implements InitializingBean {
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toList());
 
-      User principal = new User(claims.getSubject(), "", authorities);
-
-      return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+      return new UsernamePasswordAuthenticationToken(claims.getSubject(), token, authorities);
    }
 
    public boolean validateToken(String token) {

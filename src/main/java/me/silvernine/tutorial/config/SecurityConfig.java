@@ -1,8 +1,11 @@
 package me.silvernine.tutorial.config;
 
 import lombok.RequiredArgsConstructor;
-import me.silvernine.tutorial.athentication.CustomAuthenticationProvider;
-import me.silvernine.tutorial.jwt.*;
+import me.silvernine.tutorial.athentication.FirebaseAuthenticationProvider;
+import me.silvernine.tutorial.jwt.JwtAccessDeniedHandler;
+import me.silvernine.tutorial.jwt.JwtAuthenticationEntryPoint;
+import me.silvernine.tutorial.jwt.JwtFilter;
+import me.silvernine.tutorial.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -14,12 +17,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.*;
-import org.springframework.web.filter.CorsFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @EnableWebSecurity(debug = true)
@@ -29,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final TokenProvider tokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-    private final CustomAuthenticationProvider customAuthenticationProvider;
+    private final FirebaseAuthenticationProvider firebaseAuthenticationProvider;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -55,12 +56,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .toArray(AntPathRequestMatcher[]::new)
         ));
 
+
         httpSecurity
                 // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
                 .csrf().disable()
                 .cors().and()
 
-                .addFilterAt(new JwtFilter(negatedRequestMatcher, tokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtFilter(tokenProvider, negatedRequestMatcher), UsernamePasswordAuthenticationFilter.class)
 
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
@@ -82,15 +84,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .requestMatchers(negatedRequestMatcher)
                 .authenticated();
 
-//                .antMatchers("/api/hello").permitAll()
-//                .antMatchers("/api/authenticate").permitAll()
-//                .antMatchers("/api/signup").permitAll()
-
-//                .anyRequest().authenticated();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(customAuthenticationProvider);
+        auth.authenticationProvider(firebaseAuthenticationProvider);
     }
+
 }

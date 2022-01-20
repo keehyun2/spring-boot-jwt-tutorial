@@ -6,17 +6,17 @@ import org.springframework.security.core.GrantedAuthority;
 import java.util.Collection;
 import java.util.Collections;
 
-public class CustomAuthenticationToken extends AbstractAuthenticationToken {
+public class FirebaseAuthenticationToken extends AbstractAuthenticationToken {
     private Object principal;
     private String credentials;
 
-    public CustomAuthenticationToken(Object principal, String credentials) {
+    public FirebaseAuthenticationToken(Object principal, String credentials) {
         super(Collections.emptyList());
         this.principal = principal;
         this.credentials = credentials;
     }
 
-    public CustomAuthenticationToken(Object principal, String credentials, Collection<? extends GrantedAuthority> authorities) {
+    public FirebaseAuthenticationToken(Object principal, String credentials, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.principal = principal;
         this.credentials = credentials;

@@ -1,8 +1,5 @@
 package me.silvernine.tutorial.service;
 
-import java.util.Collections;
-import java.util.Optional;
-
 import lombok.extern.slf4j.Slf4j;
 import me.silvernine.tutorial.dto.UserDto;
 import me.silvernine.tutorial.entity.Authority;
@@ -13,6 +10,8 @@ import me.silvernine.tutorial.util.SecurityUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collections;
 
 @Service
 @Slf4j
@@ -27,7 +26,7 @@ public class UserService {
 
     @Transactional
     public UserDto signup(UserDto userDto) {
-        if (userRepository.findOneWithAuthoritiesByUsername(userDto.getUsername()).orElse(null) != null) {
+        if(userRepository.findOneWithAuthoritiesByUsername(userDto.getUsername()).isPresent()){
             throw new DuplicateMemberException("이미 가입되어 있는 유저입니다.");
         }
 
