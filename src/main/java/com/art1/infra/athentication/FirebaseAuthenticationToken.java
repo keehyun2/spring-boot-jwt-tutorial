@@ -1,4 +1,4 @@
-package com.art1.infra.config.athentication;
+package com.art1.infra.athentication;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;

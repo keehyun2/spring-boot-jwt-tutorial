@@ -1,4 +1,4 @@
-package com.art1.infra.config;
+package com.art1.infra.athentication;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;

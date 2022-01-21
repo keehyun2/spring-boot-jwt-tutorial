@@ -1,8 +1,8 @@
 package com.art1.modules.auth;
 
 import lombok.extern.slf4j.Slf4j;
-import com.art1.infra.config.athentication.FirebaseAuthenticationToken;
-import com.art1.infra.config.TokenProvider;
+import com.art1.infra.athentication.FirebaseAuthenticationToken;
+import com.art1.infra.athentication.TokenProvider;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

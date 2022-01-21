@@ -13,6 +13,7 @@ public class SecurityUtil {
    private static final Logger logger = LoggerFactory.getLogger(SecurityUtil.class);
 
    private SecurityUtil() {
+      throw new IllegalStateException("Utility class");
    }
 
    public static Optional<String> getCurrentUsername() {

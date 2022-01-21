@@ -1,9 +1,10 @@
-package com.art1.infra.config;
+package com.art1.infra.exception;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 import java.util.List;
 
+import com.art1.infra.common.ErrorDTO;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.validation.BindingResult;
@@ -23,14 +24,11 @@ public class MethodArgumentNotValidExceptionHandler {
     public ErrorDTO methodArgumentNotValidException(MethodArgumentNotValidException ex) {
         BindingResult result = ex.getBindingResult();
         List<org.springframework.validation.FieldError> fieldErrors = result.getFieldErrors();
-        return processFieldErrors(fieldErrors);
-    }
-
-    private ErrorDTO processFieldErrors(List<org.springframework.validation.FieldError> fieldErrors) {
         ErrorDTO errorDTO = new ErrorDTO(BAD_REQUEST.value(), "@Valid Error");
         for (org.springframework.validation.FieldError fieldError: fieldErrors) {
             errorDTO.addFieldError(fieldError.getObjectName(), fieldError.getField(), fieldError.getDefaultMessage());
         }
         return errorDTO;
     }
+
 }

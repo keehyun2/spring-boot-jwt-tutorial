@@ -1,10 +1,9 @@
 package com.art1.modules.user;
 
 import lombok.extern.slf4j.Slf4j;
-import com.art1.modules.user.UserDto;
 import com.art1.modules.user.repo.Authority;
 import com.art1.modules.user.repo.User;
-import com.art1.infra.config.DuplicateMemberException;
+import com.art1.infra.exception.DuplicateMemberException;
 import com.art1.modules.user.repo.UserRepository;
 import com.art1.infra.common.SecurityUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -1,4 +1,4 @@
-package com.art1.infra.config;
+package com.art1.infra.common;
 
 import java.util.ArrayList;
 import java.util.List;

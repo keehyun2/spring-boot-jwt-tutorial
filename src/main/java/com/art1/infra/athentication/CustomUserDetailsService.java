@@ -1,4 +1,4 @@
-package com.art1.infra.config.athentication;
+package com.art1.infra.athentication;
 
 import com.art1.modules.user.repo.User;
 import com.art1.modules.user.repo.UserRepository;

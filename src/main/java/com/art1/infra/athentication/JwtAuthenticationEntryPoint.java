@@ -1,4 +1,4 @@
-package com.art1.infra.config;
+package com.art1.infra.athentication;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

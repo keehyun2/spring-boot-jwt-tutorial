@@ -1,4 +1,4 @@
-package com.art1.infra.config.athentication;
+package com.art1.infra.athentication;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;

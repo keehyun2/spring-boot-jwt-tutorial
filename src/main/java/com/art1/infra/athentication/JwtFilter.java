@@ -1,4 +1,4 @@
-package com.art1.infra.config;
+package com.art1.infra.athentication;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,7 +1,8 @@
-package com.art1.infra.config;
+package com.art1.infra;
 
+import com.art1.infra.athentication.*;
+import com.art1.infra.exception.athentication.*;
 import lombok.RequiredArgsConstructor;
-import com.art1.infra.config.athentication.FirebaseAuthenticationProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -19,7 +20,7 @@ import org.springframework.security.web.util.matcher.OrRequestMatcher;
 
 import java.util.stream.Stream;
 
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity(debug = false)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
