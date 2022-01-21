@@ -2,7 +2,7 @@ package com.art1.infra.exception;
 
 import static org.springframework.http.HttpStatus.CONFLICT;
 
-import com.art1.infra.common.ErrorDTO;
+import com.art1.infra.ErrorDTO;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

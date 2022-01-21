@@ -1,4 +1,4 @@
-package com.art1.infra.common;
+package com.art1.infra;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

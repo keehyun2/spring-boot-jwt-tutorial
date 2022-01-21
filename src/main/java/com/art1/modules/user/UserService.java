@@ -1,11 +1,11 @@
 package com.art1.modules.user;
 
+import com.art1.modules.user.repo.AuthorityType;
 import lombok.extern.slf4j.Slf4j;
-import com.art1.modules.user.repo.Authority;
 import com.art1.modules.user.repo.User;
 import com.art1.infra.exception.DuplicateMemberException;
 import com.art1.modules.user.repo.UserRepository;
-import com.art1.infra.common.SecurityUtil;
+import com.art1.infra.SecurityUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,15 +29,12 @@ public class UserService {
             throw new DuplicateMemberException("이미 가입되어 있는 유저입니다.");
         }
 
-        Authority authority = Authority.builder()
-                .authorityName("ROLE_USER")
-                .build();
-
         User user = User.builder()
                 .username(userDto.getUsername())
                 .password(passwordEncoder.encode(userDto.getPassword()))
                 .nickname(userDto.getNickname())
-                .authorities(Collections.singleton(authority))
+                //.authorities(Collections.singletonList(authority))
+                .authorities(Collections.singletonList(AuthorityType.ROLE_USER))
                 .activated(true)
                 .build();
 

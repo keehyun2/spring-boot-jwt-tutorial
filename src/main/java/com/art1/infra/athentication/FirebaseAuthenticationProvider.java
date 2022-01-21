@@ -23,7 +23,6 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String fToken = (String) authentication.getCredentials();
         FirebaseToken firebaseToken = null;
-        log.info("CustomAuthenticationProvider");
 
         try {
             firebaseToken = FirebaseAuth.getInstance().verifyIdToken(fToken);

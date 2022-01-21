@@ -1,7 +1,6 @@
 package com.art1.infra;
 
 import com.art1.infra.athentication.*;
-import com.art1.infra.exception.athentication.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -56,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity
                 // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
                 .csrf().disable()
+                .formLogin().disable()
                 .cors().and()
 
                 .addFilterBefore(new JwtFilter(tokenProvider, negatedRequestMatcher), UsernamePasswordAuthenticationFilter.class)
