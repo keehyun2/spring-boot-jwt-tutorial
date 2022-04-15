@@ -19,7 +19,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class FirebaseConfig {
 
-    private static final String FIREBASE_CONFIG_PATH = "gcm1-9a437-firebase-adminsdk-evvpq-61ebc623b9.json";
+    private static final String FIREBASE_CONFIG_PATH = "rtls-694e3-firebase-adminsdk-t8ol0-4bd54fdc52.json";
 
     private final ResourceLoader resourceLoader;
 

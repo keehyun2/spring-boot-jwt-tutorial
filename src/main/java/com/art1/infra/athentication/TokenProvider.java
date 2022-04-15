@@ -26,15 +26,13 @@ public class TokenProvider implements InitializingBean {
 
    private static final String AUTHORITIES_KEY = "auth";
 
-   private final String secret;
-   private final long tokenValidityInMilliseconds;
+   @Value("${jwt.secret}")
+   private String secret;
+
+   @Value("${jwt.token-validity-in-seconds}")
+   private long tokenValidityInMilliseconds;
 
    private Key key;
-
-   public TokenProvider(@Value("${jwt.secret}") String secret, @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds) {
-      this.secret = secret;
-      this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
-   }
 
    @Override
    public void afterPropertiesSet() {

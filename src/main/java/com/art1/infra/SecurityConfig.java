@@ -47,7 +47,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
         NegatedRequestMatcher negatedRequestMatcher = new NegatedRequestMatcher(new OrRequestMatcher(
-                Stream.of("/api/hello", "/api/authenticate", "/api/signup")
+                Stream.of("/api/hello", "/api/authenticate", "/api/signup",
+                                "/v3/api-docs", "/v2/api-docs", "/configuration/**",
+                                "/swagger*/**", "/webjars/**")
                         .map(AntPathRequestMatcher::new)
                         .toArray(AntPathRequestMatcher[]::new)
         ));
