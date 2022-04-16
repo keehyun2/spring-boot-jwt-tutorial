@@ -20,16 +20,17 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String username = authentication.getName();
-        String fToken = (String) authentication.getCredentials();
+        String fToken = authentication.getName();
+//        String fToken = (String) authentication.getCredentials();
         FirebaseToken firebaseToken = null;
 
         try {
             firebaseToken = FirebaseAuth.getInstance().verifyIdToken(fToken);
         } catch (FirebaseAuthException e) {
             log.error("Firebase 토큰 유효성 체크 실패");
-            throw new BadCredentialsException("Firebase 토큰 유효성 체크 실패. username=" + username, e);
+            throw new BadCredentialsException("Firebase 토큰 유효성 체크 실패", e);
         }
+        String username = firebaseToken.getUid();
 
         UserDetails user = userDetailsService.loadUserByUsername(username);
         if (user == null) {

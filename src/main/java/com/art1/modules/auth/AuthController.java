@@ -28,11 +28,9 @@ public class AuthController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
+    public ResponseEntity<TokenDto> authorize(@RequestBody String fireBaseToken) {
 
-//        UsernamePasswordAuthenticationToken authenticationToken =
-//                new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
-        FirebaseAuthenticationToken authenticationToken = new FirebaseAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
+        FirebaseAuthenticationToken authenticationToken = new FirebaseAuthenticationToken(fireBaseToken, null);
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);

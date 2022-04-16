@@ -69,7 +69,7 @@ public class TokenProvider implements InitializingBean {
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toList());
 
-      return new UsernamePasswordAuthenticationToken(claims.getSubject(), token, authorities);
+      return new UsernamePasswordAuthenticationToken(claims.getSubject(), "1234", authorities);
    }
 
    public boolean validateToken(String token) {
